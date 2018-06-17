@@ -1,11 +1,6 @@
 ﻿#include "Character.h"
 
 
-void Character::move(const int deltaX, const int deltaY)
-{
-	X += deltaX;
-	Y += deltaY;
-}
 
 int Character::getBaseMoveSpeed() const
 {

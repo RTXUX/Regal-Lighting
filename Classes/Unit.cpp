@@ -28,7 +28,7 @@ void Unit::setSprite(cocos2d::Sprite* const sprite)
  */
 void Unit::addBuff(const Buff* const buff)
 {
-	buffs.emplace_back(buff);
+	
 }
 
 /**
@@ -37,7 +37,7 @@ void Unit::addBuff(const Buff* const buff)
  */
 void Unit::addSkill(const Skill* const skill)
 {
-	skills.emplace_back(skill);
+	
 }
 
 void Unit::setId(const int id)
@@ -91,12 +91,12 @@ int Unit::getEffectiveHp() const
 }
 
 
-const std::list<std::shared_ptr<Skill>>& Unit::getSkills() const
+std::list<std::shared_ptr<Skill>>& Unit::getSkills()
 {
 	return skills;
 }
 
-const std::list<std::shared_ptr<Buff>>& Unit::getBuffs() const
+std::list<std::shared_ptr<Buff>>& Unit::getBuffs()
 {
 	return buffs;
 }

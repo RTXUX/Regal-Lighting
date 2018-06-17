@@ -43,8 +43,8 @@ public:
 	virtual const std::string& getName() const;
 	virtual int getBaseHp() const;
 	virtual int getEffectiveHp() const;
-	virtual const std::list<std::shared_ptr<Skill>>& getSkills() const;
-	virtual const std::list<std::shared_ptr<Buff>>& getBuffs() const;
+	virtual std::list<std::shared_ptr<Skill>>& getSkills();
+	virtual std::list<std::shared_ptr<Buff>>& getBuffs();
 	virtual int getBaseAttack() const;
 	virtual int getEffectiveAttack() const;
 	Unit();

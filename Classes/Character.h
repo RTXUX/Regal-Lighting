@@ -14,7 +14,7 @@ protected:
 	int baseMoveSpeed, effectiveMoveSpeed;
 
 public:
-	virtual void move(const int deltaX, const int deltaY);
+	virtual void move(const int deltaX, const int deltaY)=0;
 	virtual int getBaseMoveSpeed() const;
 	virtual void setBaseMoveSpeed(const int baseMoveSpeed);
 	virtual int getEffectiveMoveSpeed() const;
