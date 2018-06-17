@@ -22,15 +22,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "HelloWorldScene.h"
+#include "MainScene.h"
 #include "SimpleAudioEngine.h"
 #include "DemoLayer.h"
 #include <stdio.h>
 USING_NS_CC;
 
-Scene* HelloWorld::createScene()
+Scene* MainScene::createScene()
 {
-    return HelloWorld::create();
+    return MainScene::create();
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -41,7 +41,7 @@ static void problemLoading(const char* filename)
 }
 
 // on "init" you need to initialize your instance
-bool HelloWorld::init()
+bool MainScene::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -49,7 +49,7 @@ bool HelloWorld::init()
     {
         return false;
     }
-
+	this->scheduleUpdate();
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -61,7 +61,7 @@ bool HelloWorld::init()
     auto closeItem = MenuItemImage::create(
                                            "CloseNormal.png",
                                            "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+                                           CC_CALLBACK_1(MainScene::menuCloseCallback, this));
 
     if (closeItem == nullptr ||
         closeItem->getContentSize().width <= 0 ||
@@ -102,7 +102,7 @@ bool HelloWorld::init()
         this->addChild(label, 1);
     }
 
-    // add "HelloWorld" splash screen"
+    // add "MainScene" splash screen"
     auto sprite = Sprite::create("HelloWorld.png");
     if (sprite == nullptr)
     {
@@ -117,15 +117,22 @@ bool HelloWorld::init()
         this->addChild(sprite, 0);
     }*/
 
-	DemoLayer *demoLayer = DemoLayer::create();
-	this->addChild(demoLayer);
 
-	getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+	auto layer = Layer::create();
+	this->addChild(layer);
+	////std::string file = "l1.tmx";
+	//auto str = String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file.c_str()).c_str());
+	auto tileMap = TMXTiledMap::create("l1.tmx");
+	auto metaLayer = tileMap->getLayer("meta");
+	//metaLayer->setVisible(false);
+	layer->addChild(tileMap);
+
+
     return true;
 }
 
 
-void HelloWorld::menuCloseCallback(Ref* pSender)
+void MainScene::menuCloseCallback(Ref* pSender)
 {
     //Close the cocos2d-x game scene and quit the application
     Director::getInstance()->end();

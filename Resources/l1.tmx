@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="left-down" width="50" height="5" tilewidth="32" tileheight="32" infinite="0" nextobjectid="10">
- <tileset firstgid="1" name="1" tilewidth="1" tileheight="1" tilecount="0" columns="0"/>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="left-up" width="50" height="5" tilewidth="32" tileheight="32" infinite="0" nextobjectid="10">
  <tileset firstgid="1" name="map1" tilewidth="32" tileheight="32" tilecount="120" columns="15">
-  <image source="../../../Pictures/images/map1.png" width="480" height="256"/>
+  <image source="map1.png" width="480" height="256"/>
  </tileset>
  <tileset firstgid="121" name="coll" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="coll.png" width="32" height="32"/>
  </tileset>
  <layer name="background" width="50" height="5" locked="1">
-  <data encoding="csv">
-61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,
-51,51,51,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,51,51,51,
-51,51,51,61,61,61,61,61,61,61,61,61,51,61,61,61,61,61,61,61,61,61,51,61,61,61,61,51,61,61,61,61,61,61,61,61,61,51,61,61,61,61,61,61,61,61,61,51,51,51,
-51,51,51,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,51,51,51,
-61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61
-</data>
+  <data encoding="base64" compression="zlib">
+   eJyzZWBgsB0G2BgJD7RbKHE7qf6gRB0t7CDXH4MJD2W348IAK4k6tw==
+  </data>
  </layer>
- <layer name="meta" width="50" height="5" visible="0" locked="1">
-  <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,121,0,0,0,0,0,0,0,0,0,121,0,0,0,0,121,0,0,0,0,0,0,0,0,0,121,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-</data>
+ <layer name="meta" width="50" height="5" locked="1">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFQxlUUqCOEr2jYGgBALktAeU=
+  </data>
  </layer>
 </map>
