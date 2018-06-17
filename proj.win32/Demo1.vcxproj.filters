@@ -13,6 +13,9 @@
     <Filter Include="src\reader">
       <UniqueIdentifier>{8848b257-d38e-4d11-91ae-10f4901ec2b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\b2d">
+      <UniqueIdentifier>{0b0a8694-7e65-4dc1-b53a-7bc9dfcf8efd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -145,6 +148,21 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Unit.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\RWorld.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\b2d\b2dRootWorldNode.cpp">
+      <Filter>src\b2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\b2d\b2dSprite.cpp">
+      <Filter>src\b2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\b2d\GLESDebugDraw.cpp">
+      <Filter>src\b2d</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVars.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -348,6 +366,21 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Unit.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RWorld.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\b2d\b2dRootWorldNode.h">
+      <Filter>src\b2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\b2d\b2dSprite.h">
+      <Filter>src\b2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\b2d\GLESDebugDraw.h">
+      <Filter>src\b2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameVars.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

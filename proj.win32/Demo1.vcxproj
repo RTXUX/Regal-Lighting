@@ -76,7 +76,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;..\Classes\reader;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)external/Box2D/include;$(EngineRoot)external;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;..\Classes;\Classes\b2d;..\Classes\reader;..;%(AdditionalIncludeDirectories);$(_COCOS_HEADER_WIN32_BEGIN);$(_COCOS_HEADER_WIN32_END)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USE_MATH_DEFINES;GL_GLEXT_PROTOTYPES;CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -150,6 +150,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\b2d\b2dRootWorldNode.cpp" />
+    <ClCompile Include="..\Classes\b2d\b2dSprite.cpp" />
+    <ClCompile Include="..\Classes\b2d\GLESDebugDraw.cpp" />
     <ClCompile Include="..\Classes\Buff.cpp" />
     <ClCompile Include="..\Classes\Building.cpp" />
     <ClCompile Include="..\Classes\Character.cpp" />
@@ -190,16 +193,22 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\reader\dragonbones\textures\TextureData.cpp" />
     <ClCompile Include="..\Classes\reader\ui\PageView.cpp" />
     <ClCompile Include="..\Classes\reader\ui\RichtextStringVisitor.cpp" />
+    <ClCompile Include="..\Classes\RWorld.cpp" />
     <ClCompile Include="..\Classes\Skill.cpp" />
     <ClCompile Include="..\Classes\Unit.cpp" />
+    <ClCompile Include="GameVars.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\b2d\b2dRootWorldNode.h" />
+    <ClInclude Include="..\Classes\b2d\b2dSprite.h" />
+    <ClInclude Include="..\Classes\b2d\GLESDebugDraw.h" />
     <ClInclude Include="..\Classes\Buff.h" />
     <ClInclude Include="..\Classes\Building.h" />
     <ClInclude Include="..\Classes\Character.h" />
     <ClInclude Include="..\Classes\DemoLayer.h" />
+    <ClInclude Include="..\Classes\GameVars.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\Classes\Hero.h" />
     <ClInclude Include="..\Classes\reader\animation\AnimateClip.h" />
@@ -259,6 +268,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\reader\Macros.h" />
     <ClInclude Include="..\Classes\reader\ui\PageView.h" />
     <ClInclude Include="..\Classes\reader\ui\RichtextStringVisitor.h" />
+    <ClInclude Include="..\Classes\RWorld.h" />
     <ClInclude Include="..\Classes\Skill.h" />
     <ClInclude Include="..\Classes\Unit.h" />
     <ClInclude Include="main.h" />
