@@ -17,8 +17,8 @@ public:
 	virtual float getTime() const;
 	virtual void setTime(const float time);
 	static RWorld* getInstance();
-	RWorld* create();
-	void destory();
+	static RWorld* create();
+	static void destory();
 	virtual list<shared_ptr<Unit>>& getUnitRegistry();
 	virtual list<shared_ptr<Buff>>& getBuffRegistry();
 };

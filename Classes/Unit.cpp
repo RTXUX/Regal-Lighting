@@ -1,4 +1,5 @@
 #include "Unit.h"
+#include "RWorld.h"
 
 
 cocos2d::Sprite* Unit::getSprite() const
@@ -113,6 +114,7 @@ int Unit::getEffectiveAttack() const
 
 Unit::Unit()
 {
+	RWorld::getInstance()->getUnitRegistry().emplace_back(this);
 }
 
 

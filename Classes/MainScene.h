@@ -26,19 +26,25 @@
 #define __HELLOWORLD_SCENE_H__
 
 #include "cocos2d.h"
-
+#include "Hero.h"
+#include "b2d/b2dRootWorldNode.h"
+using namespace std;
 class MainScene : public cocos2d::Scene
 {
 public:
     static cocos2d::Scene* createScene();
-
     virtual bool init();
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
-    
+	shared_ptr<Hero> hero1, hero2;
+	b2WorldNode* pWorld;
     // implement the "static create()" method manually
     CREATE_FUNC(MainScene);
 
+	virtual void update(float delta) override;
+
+	virtual void updateSpeedForHero1();
+	virtual void updateSpeedForHero2();
 private:
 	std::map<cocos2d::EventKeyboard::KeyCode, bool> keys;
 };

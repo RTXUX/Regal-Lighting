@@ -14,7 +14,7 @@ protected:
 	int id;
 	std::string name;
 	int baseHP, effectiveHP;
-	cocos2d::Sprite* sprite;
+	cocos2d::Sprite* sprite = nullptr;
 public:
 	virtual cocos2d::Sprite* getSprite() const;
 	virtual void setSprite(cocos2d::Sprite* const sprite);

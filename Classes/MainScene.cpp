@@ -26,6 +26,7 @@
 #include "SimpleAudioEngine.h"
 #include "DemoLayer.h"
 #include <stdio.h>
+#include "RWorld.h"
 USING_NS_CC;
 
 Scene* MainScene::createScene()
@@ -117,16 +118,62 @@ bool MainScene::init()
         this->addChild(sprite, 0);
     }*/
 
-
-	auto layer = Layer::create();
-	this->addChild(layer);
-	////std::string file = "l1.tmx";
+	//std::string file = "l1.tmx";
 	//auto str = String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file.c_str()).c_str());
+	RWorld::create();
+
 	auto tileMap = TMXTiledMap::create("l1.tmx");
 	auto metaLayer = tileMap->getLayer("meta");
-	//metaLayer->setVisible(false);
-	layer->addChild(tileMap);
+	metaLayer->setVisible(false);
+	this->addChild(tileMap);
+	GameVars::initVars();
+	auto listener = EventListenerKeyboard::create();
+    {
+		pWorld = b2WorldNode::create(0, 0);
+		addChild(pWorld);
+		auto border1 = b2Sprite::create("clear.png", Rect(0, 0, visibleSize.width, 2), b2BodyType::b2_staticBody, 0.0f, 0.0f);
+		auto border2 = b2Sprite::create("clear.png", Rect(0, 0, visibleSize.width, 2), b2BodyType::b2_staticBody, 0.0f, 0.0f);
+		auto border3 = b2Sprite::create("clear.png", Rect(0, 0, 2, visibleSize.height), b2BodyType::b2_staticBody, 0.0f, 0.0f);
+		auto border4 = b2Sprite::create("clear.png", Rect(0, 0, 2, visibleSize.height), b2BodyType::b2_staticBody, 0.0f, 0.0f);
+		pWorld->addChild(border1);
+		pWorld->addChild(border2);
+		pWorld->addChild(border3);
+		pWorld->addChild(border4);
+		border1->setPosition(visibleSize.width / 2, 1);
+		border2->setPosition(visibleSize.width / 2, visibleSize.height - 1);
+		border3->setPosition(1, visibleSize.height / 2);
+		border4->setPosition(visibleSize.width - 1, visibleSize.height / 2);
 
+    }
+	listener->onKeyPressed = [this](EventKeyboard::KeyCode keyCode, Event * event)
+	{
+		//log("%d pressed", keyCode);
+		keys[keyCode] = true;
+	};
+	listener->onKeyReleased = [this](EventKeyboard::KeyCode keyCode, Event * event)
+	{
+		//log("%d released", keyCode);
+		keys[keyCode] = false;
+	};
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+	hero1 = make_shared<Hero>(100, 100, 1);
+	hero2 = make_shared<Hero>(100, 100, 1);
+    {
+		b2Sprite* sprite = b2Sprite::create("TestCube.png",b2BodyType::b2_dynamicBody,0.0f,0.0f);
+		pWorld->addChild(sprite);
+		sprite->setPosition(16, visibleSize.height / 2);
+		sprite->getBody()->SetFixedRotation(true);
+		hero1->setSprite(sprite);
+		
+    }
+    {
+		b2Sprite* sprite = b2Sprite::create("TestCube.png", b2BodyType::b2_dynamicBody, 0.0f, 0.0f);
+		pWorld->addChild(sprite);
+		sprite->setPosition(visibleSize.width-16, visibleSize.height / 2);
+		sprite->getBody()->SetFixedRotation(true);
+		hero2->setSprite(sprite);
+    }
 
     return true;
 }
@@ -147,4 +194,73 @@ void MainScene::menuCloseCallback(Ref* pSender)
     //_eventDispatcher->dispatchEvent(&customEndEvent);
 
 
+}
+
+void MainScene::update(float delta)
+{
+	Scene::update(delta);
+	RWorld::getInstance()->setTime(RWorld::getInstance()->getTime() + delta);
+	updateSpeedForHero1();
+	updateSpeedForHero2();
+	pWorld->update(delta);
+}
+
+void MainScene::updateSpeedForHero1()
+{
+	b2Sprite *sprite = dynamic_cast<b2Sprite*>(hero1->getSprite());
+	b2Vec2 v(0.0f, 0.0f);
+	sprite->getBody()->SetLinearVelocity(v);
+	if (sprite==nullptr)
+	{
+		return;
+	}
+	if (keys[EventKeyboard::KeyCode::KEY_A])
+	{
+		v.x -= 100.0f;
+	}
+	if (keys[EventKeyboard::KeyCode::KEY_D])
+	{
+		v.x += 100.0f;
+	}
+	if (keys[EventKeyboard::KeyCode::KEY_W])
+	{
+		v.y += 100.0f;
+	}
+	if (keys[EventKeyboard::KeyCode::KEY_S])
+	{
+		v.y -= 100.0f;
+	}
+	v.Normalize();
+	//v *= 32;
+	sprite->getBody()->SetLinearVelocity(v);
+}
+
+void MainScene::updateSpeedForHero2()
+{
+	b2Sprite *sprite = dynamic_cast<b2Sprite*>(hero2->getSprite());
+	b2Vec2 v(0.0f, 0.0f);
+	sprite->getBody()->SetLinearVelocity(v);
+	if (sprite == nullptr)
+	{
+		return;
+	}
+	if (keys[EventKeyboard::KeyCode::KEY_LEFT_ARROW])
+	{
+		v.x -= 100.0f;
+	}
+	if (keys[EventKeyboard::KeyCode::KEY_RIGHT_ARROW])
+	{
+		v.x += 100.0f;
+	}
+	if (keys[EventKeyboard::KeyCode::KEY_UP_ARROW])
+	{
+		v.y += 100.0f;
+	}
+	if (keys[EventKeyboard::KeyCode::KEY_DOWN_ARROW])
+	{
+		v.y -= 100.0f;
+	}
+	v.Normalize();
+	//v *= 32;
+	sprite->getBody()->SetLinearVelocity(v);
 }
