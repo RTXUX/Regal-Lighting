@@ -2,6 +2,16 @@
 
 RWorld *RWorld::instance = nullptr;
 
+float RWorld::getTime() const
+{
+	return time;
+}
+
+void RWorld::setTime(const float time)
+{
+	this->time = time;
+}
+
 RWorld* RWorld::getInstance()
 {
 	return instance;

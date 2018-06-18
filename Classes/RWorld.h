@@ -11,9 +11,12 @@ protected:
 	list<shared_ptr<Unit>> unitRegistry;
 	static RWorld* instance;
 	list<shared_ptr<Buff>> buffRegistry;
+	float time = 0;
 
 public:
-	RWorld* getInstance();
+	virtual float getTime() const;
+	virtual void setTime(const float time);
+	static RWorld* getInstance();
 	RWorld* create();
 	void destory();
 	virtual list<shared_ptr<Unit>>& getUnitRegistry();
