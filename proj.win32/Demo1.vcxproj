@@ -196,6 +196,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\RWorld.cpp" />
     <ClCompile Include="..\Classes\Skill.cpp" />
     <ClCompile Include="..\Classes\Unit.cpp" />
+    <ClCompile Include="..\Classes\Utils.cpp" />
     <ClCompile Include="GameVars.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -271,6 +272,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\RWorld.h" />
     <ClInclude Include="..\Classes\Skill.h" />
     <ClInclude Include="..\Classes\Unit.h" />
+    <ClInclude Include="..\Classes\Utils.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

@@ -165,6 +165,9 @@
     <ClCompile Include="..\Classes\MainScene.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Utils.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -381,6 +384,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MainScene.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Utils.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
