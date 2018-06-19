@@ -2,6 +2,16 @@
 #include "RWorld.h"
 
 
+int Unit::getSide() const
+{
+	return side;
+}
+
+void Unit::setSide(const int side)
+{
+	this->side = side;
+}
+
 cocos2d::Sprite* Unit::getSprite() const
 {
 	sprite->retain();

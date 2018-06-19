@@ -15,7 +15,14 @@ protected:
 	std::string name;
 	int baseHP, effectiveHP;
 	cocos2d::Sprite* sprite = nullptr;
+
+	/**
+	 * \brief ÕóÓª£º1ÎªP1£¬2ÎªP2
+	 */
+	int side;
 public:
+	virtual int getSide() const;
+	virtual void setSide(const int side);
 	virtual cocos2d::Sprite* getSprite() const;
 	virtual void setSprite(cocos2d::Sprite* const sprite);
 protected:
