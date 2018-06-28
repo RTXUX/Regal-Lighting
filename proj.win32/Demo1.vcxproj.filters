@@ -168,6 +168,12 @@
     <ClCompile Include="..\Classes\Utils.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="Defander.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Spring.cpp">
+      <Filter>src\reader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -388,6 +394,12 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Utils.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Defender.h">
+      <Filter>src\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="Spring.h">
+      <Filter>src\reader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
