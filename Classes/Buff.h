@@ -1,8 +1,13 @@
 #pragma once
-
+#include "Unit.h"
 class Unit;
 
-
+namespace Buffs {
+	class Buff;
+	class AttackPowerBuff;
+	class AttackSpeedBuff;
+	class MovingSpeedBuff;
+}
 
 /// <summary>
 /// 增益效果类
@@ -10,6 +15,7 @@ class Unit;
 class Buff
 {
 protected:
+	bool effective;
 	Unit * host;
 public:
 	Buff(Unit* host);

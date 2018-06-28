@@ -174,6 +174,11 @@
     <ClCompile Include="Spring.cpp">
       <Filter>src\reader</Filter>
     </ClCompile>
+    <ClCompile Include="AttackPowerBuff.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackSpeedBuff.cpp" />
+    <ClCompile Include="MovingSpeedBuff.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -401,6 +406,11 @@
     <ClInclude Include="Spring.h">
       <Filter>src\reader</Filter>
     </ClInclude>
+    <ClInclude Include="AttackPowerBuff.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackSpeedBuff.h" />
+    <ClInclude Include="MovingSpeedBuff.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
