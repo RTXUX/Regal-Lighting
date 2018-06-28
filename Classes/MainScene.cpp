@@ -27,6 +27,7 @@
 #include "DemoLayer.h"
 #include <stdio.h>
 #include "RWorld.h"
+#include "Utils.h"
 USING_NS_CC;
 
 Scene* MainScene::createScene()
@@ -127,6 +128,8 @@ bool MainScene::init()
 	metaLayer->setVisible(false);
 	this->addChild(tileMap);
 	GameVars::initVars();
+	//metaLayer->setupTiles();
+	
 	auto listener = EventListenerKeyboard::create();
     {
 		pWorld = b2WorldNode::create(0, 0);
@@ -156,23 +159,67 @@ bool MainScene::init()
 		keys[keyCode] = false;
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-
-	hero1 = make_shared<Hero>(100, 100, 1);
-	hero2 = make_shared<Hero>(100, 100, 1);
+	auto setupBuildingForTileAt = [&](Vec2 tileCoord)
+	{
+		auto sprite = b2Sprite::create("clear.png", Rect(0, 0, 32, 32), b2BodyType::b2_staticBody, 0.0f, 0.0f);
+		pWorld->addChild(sprite);
+		sprite->setPosition(Utils::CoordinateTransform::tileMapCenterToCocos(tileCoord));
+	};
+	setupBuildingForTileAt(Vec2(12, 2));
+	setupBuildingForTileAt(Vec2(22, 2));
+	setupBuildingForTileAt(Vec2(27, 2));
+	setupBuildingForTileAt(Vec2(37, 2));
+	hero1 = make_shared<Hero>(1000, 100, 1);
+	hero2 = make_shared<Hero>(1000, 100, 1);
+	RWorld::getInstance()->getUnitRegistry().emplace_back(hero1);
+	RWorld::getInstance()->getUnitRegistry().emplace_back(hero2);
     {
-		b2Sprite* sprite = b2Sprite::create("TestCube.png",b2BodyType::b2_dynamicBody,0.0f,0.0f);
+		b2Sprite* sprite = b2Sprite::create("clear.png",Rect(0,0,32,32),b2BodyType::b2_dynamicBody,0.0f,0.0f);
+		Sprite *imageSprite = Sprite::create("TestCube.png");
+		imageSprite->setTag(Utils::IMAGE_SPRITE);
+		imageSprite->setPosition(16, 16);
+		sprite->addChild(imageSprite);
 		pWorld->addChild(sprite);
 		sprite->setPosition(16, visibleSize.height / 2);
 		sprite->getBody()->SetFixedRotation(true);
 		hero1->setSprite(sprite);
-		
+		auto bloodBarSprite = Sprite::create("BloodBar.png");
+
+		auto bloodBar = ProgressTimer::create(bloodBarSprite);
+		bloodBar->setType(ProgressTimer::Type::BAR);
+		bloodBar->setPosition(Vec2(16, 3));
+		bloodBar->setBarChangeRate(Point(1, 0));
+		bloodBar->setMidpoint(Point(0, 0.5));
+		bloodBar->setTag(Utils::BLOOD_BAR);
+		sprite->addChild(bloodBar);
+		auto attack = make_shared<AttackAllDirection>(hero1.get());
+		hero1->addSkill(attack->shared_from_this());
+		hero1->setSide(1);
     }
     {
-		b2Sprite* sprite = b2Sprite::create("TestCube.png", b2BodyType::b2_dynamicBody, 0.0f, 0.0f);
+		b2Sprite* sprite = b2Sprite::create("clear.png", Rect(0, 0, 32, 32), b2BodyType::b2_dynamicBody, 0.0f, 0.0f);
+		Sprite *imageSprite = Sprite::create("TestCube.png");
+		imageSprite->setTag(Utils::IMAGE_SPRITE);
+		imageSprite->setPosition(16, 16);
+		imageSprite->setRotation(180);
+		sprite->addChild(imageSprite);
 		pWorld->addChild(sprite);
 		sprite->setPosition(visibleSize.width-16, visibleSize.height / 2);
 		sprite->getBody()->SetFixedRotation(true);
+		//sprite->setRotation(180);
 		hero2->setSprite(sprite);
+		auto bloodBarSprite = Sprite::create("BloodBar.png");
+
+		auto bloodBar = ProgressTimer::create(bloodBarSprite);
+		bloodBar->setType(ProgressTimer::Type::BAR);
+		bloodBar->setPosition(Vec2(16, 3));
+		bloodBar->setBarChangeRate(Point(1, 0));
+		bloodBar->setMidpoint(Point(0, 0.5));
+		bloodBar->setTag(Utils::BLOOD_BAR);
+		sprite->addChild(bloodBar);
+		auto attack = make_shared<AttackAllDirection>(hero2.get());
+		hero2->addSkill(attack->shared_from_this());
+		hero2->setSide(2);
     }
 
     return true;
@@ -198,14 +245,19 @@ void MainScene::menuCloseCallback(Ref* pSender)
 
 void MainScene::update(float delta)
 {
+	log("Delta: %f\n",delta);
+
 	Scene::update(delta);
 	RWorld::getInstance()->setTime(RWorld::getInstance()->getTime() + delta);
-	updateSpeedForHero1();
-	updateSpeedForHero2();
+	log("Time: %f\n",RWorld::getInstance()->getTime());
+	updateHero1();
+	updateHero2();
+	simpleSpring();
 	pWorld->update(delta);
+
 }
 
-void MainScene::updateSpeedForHero1()
+void MainScene::updateHero1()
 {
 	b2Sprite *sprite = dynamic_cast<b2Sprite*>(hero1->getSprite());
 	b2Vec2 v(0.0f, 0.0f);
@@ -230,12 +282,39 @@ void MainScene::updateSpeedForHero1()
 	{
 		v.y -= 100.0f;
 	}
+	if (keys[EventKeyboard::KeyCode::KEY_Z])
+	{
+		for (auto skill:hero1->getSkills())
+		{
+			if (dynamic_pointer_cast<AttackAllDirection>(skill)!=nullptr)
+			{
+				if (skill->isCastable())
+				{
+					log("Hero1 Attack");
+					skill->cast();
+				}
+				break;
+			}
+		}
+	}
 	v.Normalize();
 	//v *= 32;
+	v *= hero1->getEffectiveMoveSpeed();
 	sprite->getBody()->SetLinearVelocity(v);
+	auto bloodBar = dynamic_cast<ProgressTimer*>(sprite->getChildByTag(Utils::BLOOD_BAR));
+	if (bloodBar!=nullptr)
+	{
+		bloodBar->setPercentage((double)hero1->getEffectiveHp() / hero1->getBaseHp()*100);
+	}
+	if (hero1->getEffectiveHp()<0)
+	{
+		hero1->getSprite()->setPosition(Utils::CoordinateTransform::tileMapCenterToCocos(Point(0, 2)));
+		hero1->setEffectiveHp(hero1->getBaseHp());
+	}
+
 }
 
-void MainScene::updateSpeedForHero2()
+void MainScene::updateHero2()
 {
 	b2Sprite *sprite = dynamic_cast<b2Sprite*>(hero2->getSprite());
 	b2Vec2 v(0.0f, 0.0f);
@@ -260,7 +339,64 @@ void MainScene::updateSpeedForHero2()
 	{
 		v.y -= 100.0f;
 	}
+	if (keys[EventKeyboard::KeyCode::KEY_J])
+	{
+		for (auto skill : hero2->getSkills())
+		{
+			if (dynamic_pointer_cast<AttackAllDirection>(skill) != nullptr)
+			{
+				if (skill->isCastable())
+				{
+					skill->cast();
+				}
+				break;
+			}
+		}
+	}
 	v.Normalize();
 	//v *= 32;
+	v *= hero2->getEffectiveMoveSpeed();
 	sprite->getBody()->SetLinearVelocity(v);
+	auto bloodBar = dynamic_cast<ProgressTimer*>(sprite->getChildByTag(Utils::BLOOD_BAR));
+	if (bloodBar != nullptr)
+	{
+		bloodBar->setPercentage((double)hero2->getEffectiveHp() / hero2->getBaseHp()*100);
+	}
+	if (hero2->getEffectiveHp()<0)
+	{
+		hero2->getSprite()->setPosition(Utils::CoordinateTransform::tileMapCenterToCocos(Point(49, 2)));
+		hero2->setEffectiveHp(hero2->getBaseHp());
+	}
+}
+
+void MainScene::updateBuff()
+{
+
+}
+
+void MainScene::simpleSpring()
+{
+	static float lastCast = 0.0f;
+	constexpr static float CD = 1.0f;
+	auto rWorld = RWorld::getInstance();
+	if (rWorld->getTime()-lastCast>CD)
+	{
+		lastCast = rWorld->getTime();
+		for (auto unit : rWorld->getUnitRegistry())
+		{
+			Point pos = Utils::CoordinateTransform::cocosToTileMap(unit->getPosition());
+			if (pos.x>=0&&pos.x<=3&&pos.y>=1&&pos.y<=3&&unit->getSide()==1)
+			{
+				int newHP = unit->getEffectiveHp() + 400,baseHP = unit->getBaseHp();
+				if (newHP > baseHP) newHP = baseHP;
+				unit->setEffectiveHp(newHP);
+			}
+			if (pos.x >= 47 && pos.x <= 49 && pos.y >= 1 && pos.y <= 3 && unit->getSide() == 2)
+			{
+				int newHP = unit->getEffectiveHp() + 400, baseHP = unit->getBaseHp();
+				if (newHP > baseHP) newHP = baseHP;
+				unit->setEffectiveHp(newHP);
+			}
+		}
+	}
 }

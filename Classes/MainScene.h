@@ -43,8 +43,10 @@ public:
 
 	virtual void update(float delta) override;
 
-	virtual void updateSpeedForHero1();
-	virtual void updateSpeedForHero2();
+	virtual void updateHero1();
+	virtual void updateHero2();
+	virtual void updateBuff();
+	virtual void simpleSpring();
 private:
 	std::map<cocos2d::EventKeyboard::KeyCode, bool> keys;
 };

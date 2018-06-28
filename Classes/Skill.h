@@ -1,21 +1,22 @@
 #pragma once
+#include <memory>
 
 
 class Unit;
 /// <summary>
 /// ººƒ‹¿‡
 /// </summary>
-class Skill
+class Skill:public std::enable_shared_from_this<Skill>
 {
 protected:
 	Unit * host;
-	int CD;
+	float CD;
 public:
 	virtual Unit* getHost() const;
-	virtual int getCd() const;
-	virtual int getLastCast() const;
+	virtual float getCd() const;
+	virtual float getLastCast() const;
 protected:
-	int lastCast;
+	float lastCast;
 public:
 	Skill(Unit* ht);
 	virtual int cast()=0;
@@ -105,4 +106,18 @@ public:
 	Cure(Unit* ht);
 	virtual int cast();
 	virtual bool isCastable();
+};
+
+
+class AttackAllDirection:public Skill
+{
+public:
+	AttackAllDirection(Unit* const ht)
+		: Skill(ht)
+	{
+		CD = 1;
+	}
+
+	virtual int cast() override;
+	virtual bool isCastable() override;
 };

@@ -39,7 +39,7 @@ protected:
 public:
 	virtual cocos2d::Point getPosition();
 	virtual void addBuff(const Buff * const buff);
-	virtual void addSkill(const Skill* const skill);
+	virtual void addSkill(const std::shared_ptr<Skill>& skill);
 	virtual void setId(const int id);
 	virtual void setName(const std::string& name);
 	virtual void setBaseHp(const int baseHp);

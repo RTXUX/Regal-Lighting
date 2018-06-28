@@ -5,9 +5,12 @@
 
 namespace Utils
 {
+	constexpr int BLOOD_BAR = 345;
+	constexpr int IMAGE_SPRITE = 346;
 	using namespace cocos2d;
 	class CoordinateTransform
 	{
+	public:
 		static constexpr int mapHeight = 160, mapWidth = 1600;
 		static constexpr int pixelsPerTile = 32;
 		/**

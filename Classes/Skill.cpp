@@ -25,9 +25,9 @@ Skill::Skill(Unit* ht)
  * \brief 取得当前技能剩余cd
  * \return 技能剩余cd
  */
-int Skill::getCd() const
+float Skill::getCd() const
 {
-	int tim(0);
+	float tim(0);
 	RWorld* rWorld = RWorld::getInstance();
 	tim = CD - (rWorld->getTime() - lastCast);
 	if (tim > 0) return tim;
@@ -37,7 +37,7 @@ int Skill::getCd() const
  * \brief 取得上次释放技能时间
  * \return 技能上次释放时间
  */
-int Skill::getLastCast() const
+float Skill::getLastCast() const
 {
 	return lastCast;
 }
@@ -187,8 +187,8 @@ Rage::Rage(Unit* ht) :Skill(ht)
  */
 int Rage::cast()
 {
-	Buffs::Rage rage;
-	host->addBuff(rage);
+	/*Buffs::Rage rage;
+	host->addBuff(rage);*/
 	return 0;
 }
 /**
@@ -213,8 +213,8 @@ Haste::Haste(Unit* ht) :Skill(ht)
  */
 int Haste::cast()
 {
-	Buffs::Haste haste;
-	host->addBuff(haste);
+	/*Buffs::Haste haste;
+	host->addBuff(haste);*/
 	return 0;
 }
 /**
@@ -264,5 +264,27 @@ int Cure::cast()
 bool Cure::isCastable()
 {
 	if (this->getCd() == 0) return true;
+	else return false;
+}
+
+int AttackAllDirection::cast()
+{
+	auto rWorld = RWorld::getInstance();
+	lastCast = rWorld->getTime();
+	for (auto unit : rWorld->getUnitRegistry())
+	{
+		cocos2d::Vec2 dist = Utils::CoordinateTransform::cocosToTileMap(host->getPosition()) - Utils::CoordinateTransform::cocosToTileMap(unit->getPosition());
+		if (dist.getLength()<sqrt(2)&&host->getSide()!=unit->getSide())
+		{
+			unit->setEffectiveHp(unit->getEffectiveHp() - host->getEffectiveAttack());
+		}
+
+	}
+	return 0;
+}
+
+bool AttackAllDirection::isCastable()
+{
+	if (this->getCd()==0) return true;
 	else return false;
 }

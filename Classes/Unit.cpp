@@ -46,9 +46,9 @@ void Unit::addBuff(const Buff* const buff)
  * \brief 为单位添加一个技能
  * \param skill 要添加的技能的指针
  */
-void Unit::addSkill(const Skill* const skill)
+void Unit::addSkill(const shared_ptr<Skill>& skill)
 {
-	
+	this->skills.emplace_back(skill);
 }
 
 void Unit::setId(const int id)
@@ -124,7 +124,7 @@ int Unit::getEffectiveAttack() const
 
 Unit::Unit()
 {
-	RWorld::getInstance()->getUnitRegistry().emplace_back(this);
+	
 }
 
 

@@ -1,4 +1,5 @@
 #include "Hero.h"
+#include "RWorld.h"
 
 
 void Hero::alterExperience()
@@ -29,8 +30,11 @@ int Hero::getLevel() const
 Hero::Hero(int HP, int attack, int moveSpeed)
 {
 	this->setBaseHp(HP);
+	this->setEffectiveHp(HP);
 	this->setBaseAttack(attack);
 	this->setBaseMoveSpeed(moveSpeed);
+	this->setEffectiveMoveSpeed(moveSpeed);
+	this->setEffectiveAttack(attack);
 }
 
 void Hero::setLevel(const int level)
@@ -40,9 +44,11 @@ void Hero::setLevel(const int level)
 
 Hero::Hero()
 {
+	
 }
 
 
 Hero::~Hero()
 {
+
 }
