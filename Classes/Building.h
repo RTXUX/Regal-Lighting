@@ -22,4 +22,3 @@ public:
 	Building();
 	virtual ~Building();
 };
-
