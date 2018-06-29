@@ -164,3 +164,4 @@ tests/lua-tests/project/proj.tizen/res/
 
 # Ignore the CMake build folder, such as ios-build/linux-build
 *-build/
+*.suo
